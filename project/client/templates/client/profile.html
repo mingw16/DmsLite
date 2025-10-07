@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content  %}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Profil</h1>
+            {% if not user.is_verified %}
+            <div class="alert alert-danger alert-dismissible mt-4">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <p> Potwierdz swój email za pomocą linku,<br> <a href="{% url 'resend' %}">wyślij link jeszcze raz</a></p>
+            </div>
+            
+            {% endif %}
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Mój Profil</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+
+  
+
+            <!-- About Me Box -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">O mnie</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="text-center">
+                  {% if user.avatar %}
+                  <img src="{{ user.avatar }}" width='50' height='50' alt="">
+                  {% endif %}
+                </div>
+                {% if user.username %}
+                <h3 class="profile-username text-center">{{ user.username }}</h3>
+                {% comment %} <p class="text-muted text-center">Software Engineer</p>  {% endcomment %}
+                {% else %}
+                <h3 class="profile-username text-center">{{ user.email }}</h3>
+                <hr>
+                {% endif %}
+                {% if user.name %}
+                <p class="text-muted">
+                  {{ user.name }}
+                  {% if user.surname %}
+                    {{ user.surname }}
+                    
+                  </p>    
+                  <hr>
+                  {% endif %}
+                </p>    
+                {% else %}
+                <p class="text-muted">
+                  {{ user.email }}
+                </p>    
+                {% endif %}
+
+
+                {% if user.address %}
+                <strong><i class="fas fa-map-marker-alt mr-1"></i> Adres</strong>
+                <p class="text-muted">{{ user.address }}</p>
+                <hr>
+                {% endif %}
+
+                {% if user.description %}
+                <strong><i class="far fa-file-alt mr-1"></i> Opis </strong>
+
+                <p class="text-muted">{{ user.description }}</p>
+                {% endif %}
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-9">
+            <div class="card">
+
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="active tab-pane" id="activity">
+                    <!-- Post -->
+                    <div class="post">
+                      <div class="">
+                          <h4 href="#">Ustawienia</h4>
+                      </div>
+                      <!-- /.user-block -->
+
+
+                    </div>
+
+
+
+                  <div class="tab-pane" id="settings">
+                    
+                    <form class="form-horizontal p-4" action="{% url 'client_profile' %}" method="post">
+                      {% csrf_token %}
+                    
+                      {% for field in form %}
+                        {% if field.name != 'avatars' %}
+                          <span style="margin-top:15px;display: block;">{{ field.label }}:</span>
+                          {{ field }}
+                        {% endif %}
+                      {% endfor %}
+                    
+                      <span style="display: block; margin:15px 0px;">Avatar:</span>
+                      {% for value, label in form.avatars.field.choices %}
+                        <label for="avatar_{{ value }}" style="display:inline; margin: 5px 10px">
+                          <input type="radio" name="avatar" value="{{ value }}" id="avatar_{{ value }}">
+                          <img src="{% static 'img/avatars/' %}{{ value }}.png" style="width: 50px; height: 50px;">
+                        </label>
+                      {% endfor %}
+                    
+                      <div class="form-group row mt-4">
+                        <div class="offset-sm-2 col-sm-10 d-flex justify-content-end">
+                          <button type="submit" class="btn btn-danger ml-auto">Zatwierdź</button>
+                        </div>
+                      </div>
+                    </form>
+
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+
+{% endblock %}

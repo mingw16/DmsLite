@@ -1,0 +1,18 @@
+
+    <label >Dodaj nowego uczestnika</label>
+    <div style="padding:15px; ">
+        <form hx-post="{% url 'add_member' %}"
+            hx-target="#add_status">
+            {% csrf_token %}
+        <div class="input-group">
+        <div class="custom-file col-2">
+          <input class="form-control "name="email" required>
+          <input type="hidden", name="group", value = "{{ group.id }}" >
+        </div>
+        <div class="input-group-append">
+          <button class="input-group-text" type="submit">Dodaj</button>
+        </div>        
+        </div>  
+    </form>
+      <div id="add_status" style="height:20px;margin-bottom:25px;"> </div>
+ 

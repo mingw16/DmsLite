@@ -1,0 +1,53 @@
+{% load static %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url 'home' %}" class="brand-link">
+      <img src="{% static 'img/ico/sico.ico' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">DMSLite</span>
+    </a>
+    
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+
+        </div>
+        <div class="info" style="color:white">
+          {% if user.avatar %}
+          <img src="{{ user.avatar }}" width='25' height='25' class="mx-2"alt="">
+          {% endif %}
+
+          {% if user.name %}
+                <span class="profile-username text-center">{{ user.name }}</span>
+                {% comment %} <p class="text-muted text-center">Software Engineer</p>  {% endcomment %}
+                {% if user.surname %}
+                <span class="profile-username text-center">{{ user.surname }}</span>
+                {% endif %}
+          {% else %}
+                <h3 class="profile-username text-center">{{ user.email }}</h3>
+          {% endif %}
+
+       
+        </div>
+      </div>
+
+
+      
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview" role="menu" data-accordion="false">
+          <a href="{% url 'home' %}"><i class="far fa-circle nav-icon mr-2"></i>Home</a>
+        </ul>
+      </nav>
+
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview" role="menu" data-accordion="false">
+          <a href="{% url 'show_groups' %}"><i class="far fa-circle nav-icon mr-2"></i>Grupy</a>
+        </ul>
+      </nav>
+
+    
+    </div>
+    <!-- /.sidebar -->
+  </aside>

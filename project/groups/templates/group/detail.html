@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content  %}
+
+
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content">
+
+
+        <div class="card-header">
+          <h3 class="card-title">Szczegóły grupy</h3>
+        </div>
+
+
+        <div class="card card-primary card-outline card-outline-tabs">
+          <div class="card-header p-0 border-bottom-0">
+            <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="custom-tabs-four-home-tab" data-toggle="pill" href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home" aria-selected="true">Grupa</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="custom-tabs-four-profile-tab" data-toggle="pill" href="#custom-tabs-four-profile" role="tab" aria-controls="custom-tabs-four-profile" aria-selected="false">Wyślij</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="custom-tabs-four-timeline-tab" data-toggle="pill" href="#custom-tabs-four-timeline" role="tab" aria-controls="custom-tabs-four-timeline" aria-selected="false">Linia Czasu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="custom-tabs-four-messages-tab" data-toggle="pill" href="#custom-tabs-four-messages" role="tab" aria-controls="custom-tabs-four-messages" aria-selected="false">Uczestnicy</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="custom-tabs-four-edit-group-tab" data-toggle="pill" href="#custom-tabs-four-edit-group" role="tab" aria-controls="custom-tabs-four-edit-group" aria-selected="false">Edytuj</a>
+              </li>
+            </ul>
+          </div>
+          <div class="card-body">
+
+            <div class="tab-content" id="custom-tabs-four-tabContent">
+            
+
+              <div class="tab-pane fade show active" id="custom-tabs-four-home" role="tabpanel" aria-labelledby="custom-tabs-four-home-tab">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+              
+                      <div class="row">
+                        <div class="col-12">
+                          <h4>Pliki</h4>
+                          <div class="col-12 table-responsive">
+                            <table class="table table-striped">
+                              <thead>
+                              <tr>
+                                <th>Nazwa</th>
+                                <th>Typ</th>
+                                <th>Opis</th>
+                                <th>Rozmiar</th>
+                                <th> </th>
+                              </tr>
+                              </thead>
+                              <tbody>
+
+                                {% for file in files %}
+                                
+                                <tr>
+                                  <td><a href="{% url 'get_file' file_id=file.id %}">{{ file.name|slice:15 }}</a></td>
+                                  <td>{{ file.type }}</td>
+                                  <td>{{ file.description }}</td>
+                                  <td>{{ file.size }}</td>
+                                  <td>
+                                    <div class="btn-group btn-group-sm">
+                                      <a href="{% url 'download' file_id=file.id %}" class="btn btn-success">
+                                        <i class="fas fa-download"></i>
+                                      </a>
+                                      {% if role != 'viewer' %}
+                                          <a href="{% url 'delete_file_by_group' file_id=file.id group_id=group.id file_name=file.name|urlencode %} %}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                      {% endif %}
+                                  </div>
+                                </td>
+                                  
+                                </tr>
+
+                              {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                      <h3 class="text-primary">{{ group.name }}</h3>
+                      <p class="text-muted">{{ group.description }}</p>
+                      <br>
+                      <div class="text-muted">
+                 
+                        <p class="text-sm">Lider Grupy
+                          <b class="d-block">{{ leader.name }} {{ leader.surname }}</b>
+                        </p>
+                      </div>
+        
+              
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="tab-pane fade" id="custom-tabs-four-profile" role="tabpanel" aria-labelledby="custom-tabs-four-profile-tab">
+              
+                <div class="col-4" style="background-color:#ffffff;padding:5px">
+  
+                  <label for="exampleInputFile">Wyślij plik</label>
+                  <div style="padding:15px;">
+                      <form hx-post="{% url 'upload_by_group' group_id=group.id %}"
+                          hx-target="#upload_status"
+                          hx-encoding="multipart/form-data">
+                          {% csrf_token %}
+                      <div class="input-group">
+                      <div class="custom-file">
+                        <input class="form-control" type="file" id="formFile" name="file" required>
+                      </div>
+                      <div class="input-group-append">
+                        <button class="input-group-text" type="submit">Upload</button>
+                      </div>        
+                      </div>  
+                  </form>
+                    <div id="upload_status" style="height:20px"> </div>
+                </div>
+                </div>
+              
+              </div>
+
+              <div class="tab-pane fade" id="custom-tabs-four-timeline" role="tabpanel" aria-labelledby="custom-tabs-four-timeline-tab">
+              {% include 'group/timeline.html' %}
+              </div>
+
+
+
+              <div class="tab-pane fade" id="custom-tabs-four-edit-group" role="tabpanel" aria-labelledby="custom-tabs-four-edit-group-tab">
+                {% include 'group/edit.html' %}
+              </div>
+
+
+              <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel" aria-labelledby="custom-tabs-four-messages-tab">
+                {% include 'base/add_member.html' %}
+                {% include 'group/members.html' with users=users leader=leader %}
+              </div>
+            </div>
+          </div>
+          <!-- /.card -->
+        </div>
+
+     
+    
+    
+          <!-- /.card-body -->
+       
+        <!-- /.card -->
+  
+      </section>
+      <!-- /.content -->
+    </div>
+
+
+
+  {% endblock %}

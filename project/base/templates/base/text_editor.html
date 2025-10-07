@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+
+<textarea id="code-editor">{{ body }}</textarea>
+{% comment %} <button id="save-button" class="save-btn">Zapisz</button> {% endcomment %}
+<div id="save-status"></div>
+
+<style>
+  .CodeMirror {
+    height: 700px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .save-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .save-btn:hover {
+    background-color: #45a049;
+  }
+  
+  #save-status {
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+</style>
+
+<script>
+  // Inicjalizacja edytora
+  var editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
+    lineNumbers: true,
+    lineWrapping: true,
+    readOnly: true,
+    viewportMargin: Infinity,
+    {% if meta.type == '.py' %} 
+      mode: 'python',
+    {% elif meta.type == '.cpp' %}
+      mode: 'text/x-c++src',
+    {% endif %}
+    theme: 'default'
+  });
+
+  // Obsługa przycisku zapisu
+  document.getElementById('save-button').addEventListener('click', function() {
+    var codeContent = editor.getValue();
+    var statusElement = document.getElementById('save-status');
+    
+    statusElement.textContent = "Zapisywanie...";
+    statusElement.style.color = "blue";
+
+    // Wysłanie danych do serwera
+    fetch('{% url "save_file" %}', {  // Upewnij się, że masz URL o nazwie 'save_code'
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      body: JSON.stringify({
+        text: codeContent,
+        file_type: '{{ meta.type }}'
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        statusElement.textContent = "Kod został pomyślnie zapisany!";
+        statusElement.style.color = "green";
+      } else {
+        statusElement.textContent = "Błąd: " + data.message;
+        statusElement.style.color = "red";
+      }
+    })
+    .catch(error => {
+      statusElement.textContent = "Błąd połączenia: " + error;
+      statusElement.style.color = "red";
+    });
+  });
+</script>

@@ -1,0 +1,47 @@
+Available Accounts
+==================
+(0) 0xB68f2aB73C202ee617074bb48097D507e6b75127 (1000 ETH)
+(1) 0x688aBD1C39bE921AFF9f75bd378EBb027F09EE95 (1000 ETH)
+(2) 0x92f5F0E206408350D900deBFfB3Bd947C6B06667 (1000 ETH)
+(3) 0x35FF3cC377CB3966Cf38B527F2FDbdc608603dcD (1000 ETH)
+(4) 0xe8A1aBaE02829aE96c9733993208b26bD8deF7AE (1000 ETH)
+(5) 0x7AdC762F5Ed82Dd3ceC4b4CEEC90e014cde49f76 (1000 ETH)
+(6) 0x290F3e55e3B4E5798EEFA2D2DD969040d0A6EeB8 (1000 ETH)
+(7) 0xbC56992a70C0Ad4B9430916D762B68e61DfFb1C2 (1000 ETH)
+(8) 0xeBFdA4350093afc242B595aF03Ae2A9b8C5165cB (1000 ETH)
+(9) 0x63656938C014Fa4eaF1BF4275e711b68474a223B (1000 ETH)
+
+Private Keys
+==================
+(0) 0xeac9c92f3c973c885703d26e4c9bfec1f5b51ea460309437275e9f35fb58d288
+(1) 0x982ac09aaad5538aa9cbe3a1b7445c53eb8822d7bdac9c3795805ef948dc9fcd
+(2) 0x7874ed81af2c993c0ae9a7af753bb549d4ad52cce0de09366c3c795017e4eebd
+(3) 0xd0eec9ad460d3eda14a63927031a80ebe99350378cfd515740b9f8c6a2a60746
+(4) 0x509334ee1f76252277fba1fde9514e18dc0624a00b31e9304dcf480f29e879dd
+(5) 0x1bac43dd6c5ae9b3940ad96e0188f2f6dc0c1c8e9a6312773464a12a4b8caa09
+(6) 0xb8f33070d243c570da93cc385d4e8b68bdd59647c418a0c1fb7496a47d75901f
+(7) 0xe1e541ac70597a7fe9f44bcfb5ab6309b1f15f9fa819dcd15abe44c7dbde98bb
+(8) 0x28babed7dec64c12642b87c0ce8f6541382c74a5361bd63c3c34d95f509dea4a
+(9) 0x72e196f375391a8da9ccef86d608f9eff592e67deabc66d04d9e3c3144d1261b
+
+HD Wallet
+==================
+Mnemonic:      salon cook label surround six soft misery pelican hard program toss thank
+Base HD Path:  m/44'/60'/0'/0/{account_index}
+
+Default Gas Price
+==================
+2000000000
+
+BlockGas Limit
+==================
+30000000
+
+Call Gas Limit
+==================
+50000000
+
+Chain
+==================
+Hardfork: shanghai
+Id:       1337

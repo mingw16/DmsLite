@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+                <link rel="stylesheet" href="{% static 'template/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %} ">
+{% endblock %}
+
+{% block content %}
+
+  <div class="wrapper">
+
+  
+    <!-- Main Sidebar Container -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Plik:</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">{{ meta.name }}</a></li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+      {% if notifications %}
+        {% for notification in notifications %}
+        {% include 'notification/notification.html' with notification=notification %}
+        {% endfor %}
+      {% endif %}
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+         
+                <!-- /.card-header -->
+  
+              </div>
+              <div class="col-md-9">
+                <div class="card card-primary card-outline">
+                  <div class="card-header" style="">
+                    <h3 class="card-title">{{ meta.name }}</h3>
+                    {% if meta.is_archieved %}
+                    <span style= "color:green;font-size:1.3rem;margin-left:1.5rem;" title="Znak oznacza że plik pozostaje oryginalny i niezmienny">&#10004;</span>
+                    {% endif %}
+                    <a href="{% url 'download' file_id=meta.id %}" class="mx-4 btn btn-success">
+                      <i class="fas fa-download"></i>
+                    </a>
+           
+            
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+
+                    {% if meta.type == '.pdf' %}
+                    {% include "base/read_pdf.html" %}
+                      {% else %}
+                            {% include 'base/text_editor.html' %}
+                    {% endif %}
+                  {% if meta.description %}
+                    <div style='border-top:1px solid white;padding-top:5px'>
+                        {{ meta.description }}
+                    </div>
+                    {% endif %}
+                  <!-- /.card-body -->
+                  <!-- /.card-footer -->
+                  <!-- /.card-footer -->
+                </div>
+                <!-- /.card -->
+              </div>
+            
+
+              
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+  
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+
+
+
+{% endblock %}
+
+
+
+
+{% block extra_js %}
+<script src="{% static 'template/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<script src=" {% static 'template/plugins/jquery-mousewheel/jquery.mousewheel.js' %}"></script>
+<script src="{% static 'template/plugins/raphael/raphael.min.js' %}"></script>
+<script src="{% static 'template/plugins/jquery-mapael/jquery.mapael.min.js' %}"></script>
+<script src="{% static 'template/plugins/jquery-mapael/maps/usa_states.min.js' %}"></script>
+
+
+
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'template/dist/js/demo.js' %}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'template/dist/js/pages/dashboard2.js' %}"></script>
+
+
+{% endblock %}

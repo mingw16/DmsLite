@@ -1,0 +1,51 @@
+
+
+
+
+<div class="mt-5">
+  <div class="card-header">
+ 
+
+
+  </div>
+  <div class="card-body p-0">
+    <table class="table table-striped projects">
+      <thead>
+        <tr>
+          <th style='width:10% ' class="text-center">Nazwa pliku</th>
+          <th style='width:40% ' class="text-center"> Opis </th>
+          <th>Rozmiar</th>
+          <th>Data Utworzenia</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for file in files %}
+        <tr>
+          <td class="text-center"><a href="{% url 'get_file' file_id=file.id %}">{{ file.name|slice:15 }}</a></td>
+          
+          {% if file.description %}
+          
+          <td class="text-center"> {{ file.description|slice:10 }} </td>
+          {% else %}
+          <td class="text-center"> - </td>
+          {% endif %}
+
+          <td> {{ file.size }} B</td>
+          <td> {{ file.date }}</td>
+          <td class="text-right py-0 align-middle">
+            <div class="btn-group btn-group-sm">
+              <a href="{% url 'download' file_id=file.id %}" class="btn btn-success">
+                <i class="fas fa-download"></i>
+              </a>
+              <a href="{% url 'delete_file' file_id=file.id %}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+              
+            </div>
+          </td> 
+        <tr>
+          {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+  <!-- /.card-body -->
+</div>

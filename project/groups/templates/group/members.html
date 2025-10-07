@@ -1,0 +1,73 @@
+<section class="content">
+    <!-- Default box -->
+    <div class="card card-solid">
+      <div class="card-body pb-0">
+        <div class="row">
+            {% for member in members %}
+          <div class="col-12 col-sm-6 col-md-4 col-lg-2 d-flex flex-column">
+            <div class="card bg-light d-flex ">
+              <div class="card-header text-muted border-bottom-0">
+                {% if leader.id != member.user.id %}
+                <a href="{% url "delete_member" group_id=group.id email=member.user.email %}" class="btn">
+                  <i class="fas fa-trash"></i>
+                </a>
+                {% endif %}
+                <a  class="btn">
+                  <i class="fas fa"></i>
+                </a>
+              </div>
+              
+              <div class="card-body pt-0">
+                  <div class="text-center">
+        
+                  <img src="{{ member.user.avatar }}" alt="user-avatar" class="img-circle img-fluid m-4" width='75' height='75'>
+                    
+                </div>        
+                <div class="text-center">
+                    <h2 class="lead"><b>  
+                        {% if leader.id == member.user.id %}
+                        <i class="fas fa-crown"></i>
+                        {% endif %}
+                        {{ member.user.name }} {{ member.user.surname }}</b></h2>
+                        <p class="text-muted text-sm overflow-auto" > {{ member.role|capfirst }} </p>
+                    <p class="text-muted text-sm overflow-auto" style="height: 75px;"><b>Skill: </b> {{ member.user.description|slice:50 }} </p>
+                  </div>
+                </div>  
+          
+                <div class="card-footer" style="height:65px">
+                    <div class="d-flex justify-content-end align-items-center gap-2">
+                        {% if user.user_id == leader.user_id %}
+                      {% if not leader.id == member.user.id %}
+                    <form class="d-flex align-items-center" 
+                    style="gap: 0.5rem;" 
+                    hx-post="{% url 'group_edit' %}"
+                    hx-target="#edit_status"
+                    >
+                    {% csrf_token %}
+                        <select name="role" class="form-select form-select-sm" style="width: 120px;">
+                          <option value="viewer">Viewer</option>
+                          <option value="moderator">Moderator</option>
+                        </select>
+                        <input type="hidden", name="member_id", value = "{{ member.mship.id }}" >
+                        <button type="submit" class="btn btn-sm btn-success">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </form>
+                    {% endif %}
+                    {% endif %}
+                    
+                </div>
+            </div>
+        </div>
+        <div id="edit_status"></div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <!-- /.card-body -->
+
+      <!-- /.card-footer -->
+  
+    <!-- /.card -->
+
+  </section>

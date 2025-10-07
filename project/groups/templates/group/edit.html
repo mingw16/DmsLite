@@ -1,0 +1,22 @@
+<label class="form-label mb-2">Edytuj grupę</label>
+<form hx-post="{% url 'group_update_info' %}" hx-target="#add_status" class="card p-3">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label class="form-label">Nazwa</label>
+    <input type="text" name="name" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Opis</label>
+    <textarea name="description" class="form-control" rows="3" required></textarea>
+  </div>
+  <input type="hidden" name="group" value="{{ group.id }}">
+  <div class="text-end">
+    <button type="submit" class="btn btn-primary">
+      <i class="fas fa-check"></i> Zatwierdź
+    </button>
+  </div>
+</form>
+
+
+  <a href="{% url 'delete_group' group_id=group.id %}" class="btn btn-danger" onclick="confirmDeletion()"><i class="fas fa-trash"></i>&nbsp;Usuń grupę</a>
+<div id="add_status" class="mt-2" style="height:20px;"></div>

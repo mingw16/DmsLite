@@ -1,0 +1,24 @@
+<div class="" style="background-color:#ffffff;padding:5px">
+  
+  <label for="exampleInputFile">Wyślij plik</label>
+  <div style="padding:15px;">
+    <form hx-post="{% url 'upload_by_group' group_id=group.id %}"
+    hx-target="#upload_status"
+    hx-encoding="multipart/form-data">
+    {% csrf_token %}
+    <div class="">
+      <div class="custom-file col-12">
+        <input class="form-control" type="file" id="formFile" name="file" required>
+      </div>
+      <div class="col-12">
+        <div class="mb-3 mt-4">
+          <textarea class="form-control" id="exampleFormControlTextarea1" name="description" placeholder="Opis"rows="3"></textarea>
+        </div>
+      </div>
+      <div class="input-group-append">
+        <button class="input-group-text" type="submit">Wyślij</button>
+      </div>        
+      </div>  
+  </form>
+    <div id="upload_status" style="height:20px"> </div>
+</div>

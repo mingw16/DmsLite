@@ -1,0 +1,25 @@
+{% extends "blank.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="hold-transition login-page">
+  <div class="login-box">
+    <!-- /.login-logo -->
+    <div class="card card-outline card-primary">
+      <div class="card-header text-center">
+        <a href="{% url 'home' %}" class="h1"><b>DMS</b>lite</a>
+      </div>
+      <div class="card-body">
+        <p class="login-box-msg">{{ message }}</p>
+
+        <a href="{% url 'home' %}">Powrót</a>
+  
+    <!-- /.card -->
+  </div>
+
+
+</div>
+
+{% endblock %}
